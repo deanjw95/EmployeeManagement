@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL 설정파일인 Mapper 정의 -->
+<mapper namespace="employee">
+
+	<insert id="insertEmployee" parameterType="employeeVO">
+			<![CDATA[
+				insert into employee (id, name, dept, age, phone, email, addr)
+				values	(#{id}, #{name}, #{dept}, #{age}, #{phone}, #{email}, #{addr})
+			]]>
+	</insert>
+
+	<update id="updateEmployee" parameterType="employeeVO">
+			<![CDATA[
+				update employee set name=#{name}, dept=#{dept}, age=#{age}, phone=#{phone}, email=#{email}, addr=#{addr}
+				where id = #{id} 
+			]]>
+	</update>
+
+	<delete id="deleteEmployee" parameterType="employeeVO">
+			<![CDATA[
+				delete from employee
+				where id = #{id}
+			]]>
+	</delete>
+
+	<select id="selectEmployeeList" resultType="employeeVO">
+			<![CDATA[
+				select	*
+				from	employee	
+			]]>
+	</select>
+
+	<select id="selectEmployee" resultType="employeeVO">
+			<![CDATA[
+				select	*
+				from	employee	
+				where id = #{id} 
+			]]>
+	</select>
+
+	<select id="selectGroupbyDept" resultType="string">
+	    <![CDATA[
+	    	select dept
+			from employee
+			group by dept
+	    ]]>
+	</select>
+
+	<select id="countGroupbyDept" resultType="int">
+	    <![CDATA[
+	    	select count(dept)
+			from employee
+			group by dept
+	    ]]>
+	</select>
+</mapper>
+

@@ -1,0 +1,58 @@
+@font-face {
+	font-family: "NanumGothic";
+	src: url("../fonts/NanumGothic.eot");
+	src: local(※), url("../fonts/NanumGothic.woff") format("woff");
+}
+
+@font-face {
+	font-family: "NanumGothicExtraBold";
+	src: url("../fonts/NanumGothicExtraBold.eot");
+	src: local(※), url("../fonts/NanumGothicExtraBold.woff") format("woff");
+}
+html, body {
+	width: 100%;
+	height: 100%;
+	background-color: #f8f9fc;
+}
+
+#base {
+	padding-top: 100px;
+	height: 100%;
+}
+
+th, nav {
+	font: "NanumGothic", "dotum";
+	color: #273447;
+	font-weight: bold;
+}
+
+#nav {
+	background: #273447;
+}
+
+#btn {
+	background: #273447;
+	float: right;
+}
+
+#panel-head {
+	background: #273447;
+}
+
+.panel-default {
+	margin: 0px 20px 0px 20px;
+	margin-bottom: 40px;
+}
+
+.shadow {
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+}
+
+.panel-body {
+	padding: 30px 20px 30px 20px;
+}
+
+.panel-title {
+	color: #ffffff;
+}
+

@@ -1,0 +1,70 @@
+html {
+	height: 100%;
+	width: 100%;
+	background-color: #f8f9fc;
+}
+
+body {
+	display: table;
+	height: 100%;
+	width: 60%;
+	margin: 0px auto;
+	background-color: #f8f9fc;
+}
+
+.container {
+	font-size: 16px;
+	display: table-cell;
+	vertical-align: middle;
+	background-color: #f8f9fc;
+}
+
+.glyphicon-user {
+	font-size: 30rem;
+	color: #273447;
+	font-size: 30rem;
+}
+
+.d-none {
+	display: none !important;
+}
+
+@media ( min-width : 1200px) {
+	.d-lg-block {
+		display: block !important;
+		text-align: center;
+	}
+}
+
+.shadow {
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15) !important;
+}
+
+#btn {
+	background: #273447;
+	float: right;
+	margin-left: 5px;
+}
+
+#panel-head {
+	color: #fff;
+	background: #273447;
+}
+
+tr {
+	height: 40px;
+}
+th {
+	text-align: right;
+	padding-right: 15px;
+}
+
+.form-control {
+	border-radius: 10rem; 
+	width: 80%;
+	font-size: 16px;
+}
+
+* {
+	box-sizing: border-box;
+}
