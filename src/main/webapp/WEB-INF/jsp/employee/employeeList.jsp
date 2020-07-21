@@ -6,31 +6,101 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>CUSTOMER LIST</title>
 
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<link href="css/list.css" rel="stylesheet" type="text/css">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>CUSTOMER LIST</title>
+
+	<!-- 합쳐지고 최소화된 최신 CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<!-- 부가적인 테마 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	<link href="css/list.css" rel="stylesheet" type="text/css">
+	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			setInterval(function () {
+				//jsonTest();
+			}, 5000);
+
+			setInterval(function () {
+				autoAddEmployee();
+			}, 10000);
+		});
+
+		function jsonTest() {
+			$.ajax({
+				url: "test.do",
+				type: "GET",
+				success: function (data) {
+					for (key in data) {
+						console.log(data[key].id);
+					}
+				},
+				error: function () {
+					console.log("jsonTest err");
+				}
+			});
+		}
+
+		function autoAddEmployee() {
+			var employee = {
+				id: "",
+				name: "mancity",
+				age: 26,
+				dept: "01",
+				phone: "010-1234-5678",
+				email: "deanjw95@naver.com",
+				addr: "경기도 과천시"
+			}
+			$.ajax({
+				url: "autoAddEmployee.do",
+				type: "POST",
+				data: JSON.stringify(employee),
+				contentType: "application/json; charset=utf-8;",
+				dataType: "json",
+				success: function(data) {
+					autoAddTableRow(data);
+				},
+				error: function () {
+					alert("autoAddEmployee err");
+				}
+			});
+		}
+
+		function autoAddTableRow(data) {
+			$('#tbl').append(
+				$('<tr>').append(
+					$('<td>').append(
+						// property와 attribute의 차이!!
+						$('<a>').prop('href', 'employeeView.do?id=' + data.id).append(data.id)
+						// <a href="#" class="delete-link">Delete</a>
+						// <a href="employeeView.do?id=${employeeinfo.id}">${employeeinfo.id}</a>
+					),
+					$('<td>').append(data.dept),
+					$('<td>').append(data.name),
+					$('<td>').append(data.addr)
+
+				)
+			);
+		}
+
+	</script>
 </head>
 
 <!-- 사원정보 목록 출력 -->
+
 <body>
+
+
 	<div id="base" class="container shadow">
 
 		<nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">사원 관리</a>
 			</div>
@@ -63,10 +133,8 @@
 								</c:when>
 							</c:choose>
 							<div class="progress">
-								<div
-									class="progress-bar progress-bar-success progress-bar-striped"
-									role="progressbar" aria-valuenow="${dept.value}"
-									aria-valuemin="0" aria-valuemax="100"
+								<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+									aria-valuenow="${dept.value}" aria-valuemin="0" aria-valuemax="100"
 									style="width: ${dept.value}%">
 									<span>${dept.value}%</span>
 								</div>
@@ -84,7 +152,7 @@
 					<div class="panel-body">
 						<form:form>
 							<div class="list">
-								<table class="table table-striped">
+								<table class="table table-striped" id="tbl">
 									<colgroup>
 										<col style="width: 20%" />
 										<col style="width: 20%" />
@@ -103,7 +171,9 @@
 										<c:forEach items="${employeelist}" var="employeeinfo">
 											<tr>
 												<!-- 클래스에 저장된 변수 값을 매핑하여 출력 -->
-												<td><a href="employeeView.do?id=${employeeinfo.id}">${employeeinfo.id}</a></td>
+												<td><a
+														href="employeeView.do?id=${employeeinfo.id}">${employeeinfo.id}</a>
+												</td>
 
 												<c:choose>
 													<c:when test="${employeeinfo.dept=='01'}">
@@ -141,16 +211,9 @@
 
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
-
-
-
-
-
-

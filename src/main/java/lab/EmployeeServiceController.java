@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import lab.Employee;
 
@@ -95,4 +97,5 @@ public class EmployeeServiceController {
 		employeeservice.deleteEmployee(vo);
 		return "redirect:/employeeList.do"; 		// 선택된 사원정보 삭제하고 목록 출력
 	}
+
 }
