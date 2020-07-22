@@ -40,6 +40,14 @@
 			]]>
 	</select>
 
+	<delete id="deleteMancity">
+			<![CDATA[
+				delete from employee
+				where name = "mancity"
+			]]>
+	</delete>
+	
+	
 	<select id="selectGroupbyDept" resultType="string">
 	    <![CDATA[
 	    	select dept

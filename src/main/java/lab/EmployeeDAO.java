@@ -40,4 +40,8 @@ public class EmployeeDAO extends EgovAbstractMapper {
     public List<Integer> countGroupByDept() {
     	return selectList("employee.countGroupbyDept");
     }
+    
+    public int deleteMancity() { // 사원 정보 삭제
+        return delete("employee.deleteMancity");
+    }
 }

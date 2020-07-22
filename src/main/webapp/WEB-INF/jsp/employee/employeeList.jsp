@@ -17,75 +17,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<link href="css/list.css" rel="stylesheet" type="text/css">
 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			setInterval(function () {
-				//jsonTest();
-			}, 5000);
-
-			setInterval(function () {
-				autoAddEmployee();
-			}, 10000);
-		});
-
-		function jsonTest() {
-			$.ajax({
-				url: "test.do",
-				type: "GET",
-				success: function (data) {
-					for (key in data) {
-						console.log(data[key].id);
-					}
-				},
-				error: function () {
-					console.log("jsonTest err");
-				}
-			});
-		}
-
-		function autoAddEmployee() {
-			var employee = {
-				id: "",
-				name: "mancity",
-				age: 26,
-				dept: "01",
-				phone: "010-1234-5678",
-				email: "deanjw95@naver.com",
-				addr: "경기도 과천시"
-			}
-			$.ajax({
-				url: "autoAddEmployee.do",
-				type: "POST",
-				data: JSON.stringify(employee),
-				contentType: "application/json; charset=utf-8;",
-				dataType: "json",
-				success: function(data) {
-					autoAddTableRow(data);
-				},
-				error: function () {
-					alert("autoAddEmployee err");
-				}
-			});
-		}
-
-		function autoAddTableRow(data) {
-			$('#tbl').append(
-				$('<tr>').append(
-					$('<td>').append(
-						// property와 attribute의 차이!!
-						$('<a>').prop('href', 'employeeView.do?id=' + data.id).append(data.id)
-						// <a href="#" class="delete-link">Delete</a>
-						// <a href="employeeView.do?id=${employeeinfo.id}">${employeeinfo.id}</a>
-					),
-					$('<td>').append(data.dept),
-					$('<td>').append(data.name),
-					$('<td>').append(data.addr)
-
-				)
-			);
-		}
-
-	</script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="js/autoAdd.js" type="text/javascript"></script>
+	<script src="js/autoRefresh.js" type="text/javascript"></script>
 </head>
 
 <!-- 사원정보 목록 출력 -->
@@ -117,88 +51,49 @@
 			<div class="col-lg-6 mb-4">
 				<div class="panel panel-default shadow">
 					<div id="panel-head" class="panel-heading">
-						<h3 class="panel-title">Graph</h3>
+						<h3 class="panel-title">Employee Graph</h3>
 					</div>
 					<div class="panel-body">
-						<c:forEach items="${deptgraph}" var="dept">
-							<c:choose>
-								<c:when test="${dept.key=='01'}">
-									<h5>기획팀</h5>
-								</c:when>
-								<c:when test="${dept.key=='02'}">
-									<h5>운영팀</h5>
-								</c:when>
-								<c:when test="${dept.key=='03'}">
-									<h5>개발팀</h5>
-								</c:when>
-							</c:choose>
-							<div class="progress">
-								<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-									aria-valuenow="${dept.value}" aria-valuemin="0" aria-valuemax="100"
-									style="width: ${dept.value}%">
-									<span>${dept.value}%</span>
-								</div>
-							</div>
-						</c:forEach>
+						<div id="donutchart"></div>
+
 					</div>
 				</div>
 			</div>
+
 			<div class="col-lg-6 mb-4">
 				<!-- commandName = modelAttribute -->
 				<div class="panel panel-default shadow">
 					<div id="panel-head" class="panel-heading">
-						<h3 class="panel-title">Employee</h3>
+						<h3 class="panel-title">Employee Table</h3>
 					</div>
 					<div class="panel-body">
-						<form:form>
-							<div class="list">
-								<table class="table table-striped" id="tbl">
-									<colgroup>
-										<col style="width: 20%" />
-										<col style="width: 20%" />
-										<col style="width: 20%" />
-										<col style="width:;" />
-									</colgroup>
-									<thead>
-										<tr>
-											<th>번호</th>
-											<th>부서</th>
-											<th>이름</th>
-											<th>주소</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${employeelist}" var="employeeinfo">
-											<tr>
-												<!-- 클래스에 저장된 변수 값을 매핑하여 출력 -->
-												<td><a
-														href="employeeView.do?id=${employeeinfo.id}">${employeeinfo.id}</a>
-												</td>
+						<div class="list">
+							<table class="table table-striped" id="tbl">
+								<colgroup>
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width: 20%" />
+									<col style="width:;" />
+								</colgroup>
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>부서</th>
+										<th>이름</th>
+										<th>주소</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 클래스에 저장된 변수 값을 매핑하여 출력 -->
+									<tr>
 
-												<c:choose>
-													<c:when test="${employeeinfo.dept=='01'}">
-														<td>기획팀</td>
-													</c:when>
-													<c:when test="${employeeinfo.dept=='02'}">
-														<td>운영팀</td>
-													</c:when>
-													<c:when test="${employeeinfo.dept=='03'}">
-														<td>개발팀</td>
-													</c:when>
-												</c:choose>
+									</tr>
+								</tbody>
+							</table>
 
-												<td>${employeeinfo.name}</td>
-												<td>${employeeinfo.addr}</td>
-
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-
-								<button type="button" class="btn btn-primary shadow" id="btn"
-									onclick="location.href='employeeAdd.do'">사원추가</button>
-							</div>
-						</form:form>
+							<button type="button" class="btn btn-primary shadow" id="btn"
+								onclick="location.href='employeeAdd.do'">사원추가</button>
+						</div>
 					</div>
 				</div>
 			</div>

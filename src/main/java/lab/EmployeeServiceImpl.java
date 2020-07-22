@@ -43,5 +43,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Integer> countGroupByDept() throws Exception {
     	return employeeDAO.countGroupByDept();
     }
+    
+	public void deleteMancity() throws Exception {
+		employeeDAO.deleteMancity();
+	}
 
 }

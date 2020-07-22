@@ -22,10 +22,38 @@ public class EmployeeServiceController2 {
 	
 	
 	@RequestMapping(value = "/test.do", method = RequestMethod.GET)
-	protected List<Employee> employList() throws Exception{
+	protected List<Employee> test() throws Exception{
 		Employee vo = new Employee();
 		System.out.println(employeeservice.selectEmployeeList(vo).get(0).email);
 		return employeeservice.selectEmployeeList(vo);
+	}
+	
+	@RequestMapping(value = "/autoRefreshList.do", method = RequestMethod.GET)
+	protected List<Employee> autoRefreshList() throws Exception{
+		
+		Employee vo = new Employee();
+		List<Employee> employeeList = employeeservice.selectEmployeeList(vo);
+		
+		if (employeeList.size() > 15) {
+			employeeservice.deleteMancity();
+			employeeList = employeeservice.selectEmployeeList(vo);
+		}
+		
+		return employeeList;
+	}
+	
+	@RequestMapping(value = "/getDeptNum.do", method = RequestMethod.GET)
+	protected List<Integer> getDeptNum() throws Exception{
+		
+		List<Integer> deptcountlist = employeeservice.countGroupByDept();
+		return deptcountlist;
+	}
+	
+	@RequestMapping(value = "/getDept.do", method = RequestMethod.GET)
+	protected List<String> getDept() throws Exception{
+		
+		List<String> deptlist = employeeservice.selectGroupByDept();
+		return deptlist;
 	}
 	
 	@RequestMapping(value = "/autoAddEmployee.do", method = RequestMethod.POST)
